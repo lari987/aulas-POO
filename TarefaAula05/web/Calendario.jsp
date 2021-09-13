@@ -27,9 +27,6 @@
         <title>JSP - Calendário</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <style>
-            
-        </style>
     </head>
     <body>
         <h3><a href="index.html">Voltar</a></h3>
@@ -39,12 +36,9 @@
         
         if( ( (ano % 4 == 0) && (ano % 100 != 0) ) || (ano % 400 == 0) ){
           bissexto = 1;
-        }
-		
-        else{
+            }else{
     	 bissexto = 0;
         }
-        
         Calendar c = Calendar.getInstance();
         c.set(Calendar.YEAR, ano);
         c.set(Calendar.MONTH, mes-1);
@@ -54,7 +48,6 @@
         int[] tamanhoDoMes = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
         String[] meses = {"Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"};
             
-        
         if (bissexto == 1){
            tamanhoDoMes[1] = 29;
         }
