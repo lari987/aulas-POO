@@ -9,7 +9,7 @@
 <!DOCTYPE html>
 <% 
     String errorMessage = null;
-    double valor = 0, taxa = 0, parcelas = 0;
+    double valor = 0, taxa = 0, meses = 0;
 
     try{
      valor = Double.parseDouble(request.getParameter("valor"));
@@ -22,7 +22,7 @@
     errorMessage = "erro ao ler parametro ano";
     }
     try{
-     parcelas = Double.parseDouble(request.getParameter("parcelas"));
+     meses = Double.parseDouble(request.getParameter("meses"));
     }catch(Exception e){
     errorMessage = "erro ao ler parametro mes";
     }
@@ -34,31 +34,55 @@
     </head>
     <body>
         <%@include file="WEB-INF/jspf/header.jspf" %>
-        <h1 style="text-align: center">Calculo de Amortização:</h1>
-        
-        <%
-            double porcentagem = (taxa / 100);
-            double s = valor * porcentagem;
-            double p = s *Math.pow(1 + porcentagem, parcelas);
-            double r = Math.pow(1 + porcentagem, parcelas) - 1;
-            double resultado = p/r;
-            DecimalFormat deci = new DecimalFormat("0.00");
-            
-            double g = resultado - s;
-            double amortizacao = g * Math.pow(1 + porcentagem, parcelas - 1);
-            //double amortizacao = a1*Math.pow(1 + porcentagem, parcelas - 1);
-            %>
-            
-            <form style="text-align: center">
+        <h1>Calculo de Amortização:</h1>
+        <form>
             <input type="number" name="valor" placeholder="valor em R$"/>
             <input type="number" name="taxa" placeholder="taxa de juros em %"/>
-            <input type="number" name="parcelas" placeholder="parcelas mensais"/>
+            <input type="number" name="meses" placeholder="parcelas mensais"/>
             <input type="submit" value="Mostrar"/>
         </form>
-            <br>
-            <h2 style="text-align: center">Resultado:</h2>
-            <h3 style="text-align: center">R$<%= deci.format(amortizacao) %></h3>
-            <br><br><br><br><br>
+        <br>
+        <%
+            double porcentagem = (taxa / 100);
+            double parcela = (valor*porcentagem) /(1-(1/(Math.pow(1 + porcentagem,meses))));
+            
+            DecimalFormat deci = new DecimalFormat("0.00");
+            
+            //double a = resultado - juros;
+            //double amortizacao = g * Math.pow(1 + porcentagem, parcelas - 1);
+            String vazio = "-";
+            %>
+            <table border="1">
+                <tr>
+                    <th>Período</th>
+                    <th>Saldo Devedor</th>
+                    <th>Parcela</th>
+                    <th>Juros</th>
+                    <th>Amortização</th>
+                </tr>
+                <%for(int i = 0; i <= meses; i++){%>
+                <tr>
+                <%if(i == 0){%>
+                 <td><%= i %></td>
+                 <td><%= valor %></td>
+                 <td><%= vazio %></td>
+                 <td><%= vazio %></td>
+                 <td><%= vazio %></td>
+                 <%}else{%>
+                  <%double juros = valor * porcentagem;
+                    double a = parcela - juros;
+                    double saldo = valor - a;
+                    valor = saldo;
+                  %>
+                 <td><%= i %></td>
+                 <td><%= deci.format(saldo) %></td>
+                 <td><%= deci.format(parcela) %></td>
+                 <td><%= deci.format(juros) %></td>
+                 <td><%= deci.format(a) %></td>
+                 <%}%>
+                 <%}%>
+                </tr>
+            </table>
             <h3><a href="index.jsp">Voltar</a></h3>
             <%@include file="WEB-INF/jspf/footer.jspf" %>
     </body>
