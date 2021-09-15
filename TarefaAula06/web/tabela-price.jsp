@@ -14,17 +14,17 @@
     try{
      valor = Double.parseDouble(request.getParameter("valor"));
     }catch(Exception e){
-    errorMessage = "erro ao ler parametro mes";
+    errorMessage = "erro ao ler parametro valor";
     }
     try{
      taxa = Double.parseDouble(request.getParameter("taxa"));
     }catch(Exception e){
-    errorMessage = "erro ao ler parametro ano";
+    errorMessage = "erro ao ler parametro taxa";
     }
     try{
      meses = Double.parseDouble(request.getParameter("meses"));
     }catch(Exception e){
-    errorMessage = "erro ao ler parametro mes";
+    errorMessage = "erro ao ler parametro meses";
     }
 %>
 <html>
