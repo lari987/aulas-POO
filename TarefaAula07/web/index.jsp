@@ -7,13 +7,14 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <%
-      int[] vetor = new int [6];
-      
       
       if(request.getParameter("login")!=null){
       String UserName = request.getParameter("username");
       session.setAttribute("username", UserName);
+      
+       
       response.sendRedirect(request.getRequestURI());
+      
     }else if(request.getParameter("logout")!=null){
        session.removeAttribute("username");
        response.sendRedirect(request.getRequestURI());
@@ -26,8 +27,9 @@
         <title>Pagina Principal</title>
     </head>
     <body>
+        <%if(session.getAttribute("username")!=null){%>
         <%@include file="WEB-INF/jspf/header.jspf" %>
-        
+        <%}%>
         <form>
             <br>
             <%if(session.getAttribute("username")==null){%>
@@ -39,20 +41,5 @@
              <input type="submit" name="logout" value="LOGOUT"/>
             <%}%>
         </form>
-        <br>
-        <% if(session.getAttribute("username")!=null){%>
-        <table border="1">
-            <tr>
-                <th>Número</th>
-            </tr>
-            <%for(int i = 0; i < 6; i++) {%>
-            <tr>
-                <% vetor[i] = ((int)(100*Math.random())); %>
-                <td><%= vetor[i] %></td>
-            </tr>
-            <%}%>
-        </table>
-        <%}%>
-        <hr/>
     </body>
 </html>

@@ -1,0 +1,69 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="java.util.ArrayList"%>
+<%@ page pageEncoding="UTF-8" %>
+<h2>Larissa App</h2>
+<% int cont = 0;
+   ArrayList<String> NomesUsuarios = new ArrayList<>();
+   int[] vetor = new int[6];
+   
+    if(request.getParameter("login")!=null){
+      session.setAttribute("nomeusuario", request.getParameter("nomeusuario"));
+     
+      if(application.getAttribute("cont")==null){
+        application.setAttribute("cont", cont);
+    }
+    cont = (int) application.getAttribute("cont");
+    ++cont;
+    application.setAttribute("cont", cont);
+    
+      if(application.getAttribute("usuariosConect")==null){
+       application.setAttribute("usuariosConect", NomesUsuarios);
+    }  
+    NomesUsuarios = (ArrayList) application.getAttribute("usuariosConect");
+    NomesUsuarios.add(session.getAttribute("nomeusuario").toString());
+    application.setAttribute("usuariosConect", NomesUsuarios);
+    
+    for(int k = 0; k < 5; k++){
+     vetor[k] = ((int)(60*Math.random()));
+    }
+    session.setAttribute("vetor", vetor);
+    
+    }else if(request.getParameter("logout")!=null){
+    
+    cont = (int) application.getAttribute("cont");
+    --cont;
+    application.setAttribute("cont", cont);
+    
+    NomesUsuarios = (ArrayList) application.getAttribute("usuariosConect");
+    int posicaoArray = 0;
+    int posicaoNome = -1;
+    do{
+       if(session.getAttribute("nomeusuario").equals(NomesUsuarios.get(posicaoArray))){
+         posicaoNome = posicaoArray;
+        }
+        posicaoArray++;
+        
+    }while(posicaoNome == -1);
+     NomesUsuarios.remove(posicaoNome);
+     application.setAttribute("usuariosConect", NomesUsuarios);
+     
+      session.removeAttribute("nomeusuario");
+    }
+    String nomeusuario = (String) session.getAttribute("nomeusuario");
+    
+    int[] Vetor = (int[]) session.getAttribute("vetor");
+    %>
+<form>
+    <%if(session.getAttribute("nomeusuario")==null){%>
+    Nome: <input type="text" name="nomeusuario"/>
+          <input type="submit" name="login" value="LOGIN"/>
+          <%}else{%>
+          Bem Vindo, <%= nomeusuario %>
+          <input type="submit" name="logout" value="LOGOUT"/>
+          <%}%>
+</form>
+<div style="text-align: center">
+<a href="index.jsp">Página Inicial</a> |
+<a href="Larissa.jsp">Página 1</a> |
+<a href="Larissa-dica-megasena.jsp">Página 2</a 
+</div>

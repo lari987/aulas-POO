@@ -1,0 +1,99 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="java.util.ArrayList"%>
+<%@ page pageEncoding="UTF-8" %>
+
+
+<%  ArrayList<String> NomesUsuarios = new ArrayList<>();
+    int[] vetor = new int[6];
+    int cont = 0;
+    
+   if(request.getParameter("login")!=null){//apartir do momento que o usuario se loga
+        //String userName = request.getParameter("username");
+        session.setAttribute("username", request.getParameter("username"));
+      
+        
+      if(application.getAttribute("cont")==null){  
+      application.setAttribute("cont", cont);
+    }
+      cont = (int) application.getAttribute("cont");
+      ++cont;
+      application.setAttribute("cont", cont);
+        
+      
+      
+      if(application.getAttribute("usuariosConect")==null){
+      application.setAttribute("usuariosConect", NomesUsuarios);
+    }
+    NomesUsuarios = (ArrayList) application.getAttribute("usuariosConect");
+    NomesUsuarios.add(session.getAttribute("username").toString());
+    application.setAttribute("usuariosConect", NomesUsuarios);
+    
+      
+    
+        for(int i = 0; i < 5; i++){
+        vetor[i] = ((int)(60*Math.random()));
+      }
+      for(int k = 0; k < 5; k++){
+       if(vetor[0] == vetor[k]){
+       vetor[k] = ((int)(60*Math.random()));
+      }
+    }
+        session.setAttribute("vetor", vetor);
+        
+        response.sendRedirect(request.getRequestURI());
+        
+        
+        
+        
+        
+    }else if(request.getParameter("logout")!=null){
+     
+        session.removeAttribute("vetor");
+        
+        
+        cont = (int) application.getAttribute("cont");//fazemos isso para indicar que o cont que estamos trabalhando é o mesmo de cima dentro da aplicação
+        --cont;
+        application.setAttribute("cont", cont);// cada vez que alguem sair la no topo ja decrementa
+        
+        NomesUsuarios = (ArrayList) application.getAttribute("usuariosConect");
+        int i = 0;
+        int indice = -1;
+        do {
+            if (session.getAttribute("username").equals(NomesUsuarios.get(i))) {
+                indice = i;
+            }
+            i++;
+
+        } while (indice == -1);//percorrendo 
+        NomesUsuarios.remove(indice); //acha o indice, deleta o indice
+        application.setAttribute("usuariosConect",NomesUsuarios);
+
+        session.removeAttribute("username");
+        response.sendRedirect(request.getRequestURI());
+
+    }
+    
+    String username = (String) session.getAttribute("username");
+    int Vetor[] = (int[]) session.getAttribute("vetor");
+    
+%>
+
+<h1>LarissaApp</h1>
+
+<form>
+    <br>
+    <%if(session.getAttribute("username")==null){%>
+            Nome: <input type="text" name="username"/>
+            <input type="submit" name="login" value="LOGIN"/>
+            <%}else{%>
+            Bem Vindo, <%= username %>
+             <input type="submit" name="logout" value="LOGOUT"/>
+            <%}%>
+</form>
+<br>
+<div style="text-align: center">
+<a href="index.jsp">Início</a> | 
+<a href="Larissa.jsp">Página 1</a> | 
+<a href="Larissa-dica-megasena.jsp">Página 2</a> |
+</div>
+     
