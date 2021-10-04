@@ -9,10 +9,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Página Inicial</title>
     </head>
     <body>
-       <%@include file="WEB-INF/jspf/header.jspf" %>border="1" style="width: 580px; height: 100px; margin-left: 28%
+       <%@include file="WEB-INF/jspf/header.jspf" %>
        <br>
        Usuarios Conectados:
        <%if(application.getAttribute("cont")!=null){%>
