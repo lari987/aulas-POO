@@ -23,10 +23,14 @@
     NomesUsuarios.add(session.getAttribute("nomeusuario").toString());
     application.setAttribute("usuariosConect", NomesUsuarios);
     
+    
     for(int j = 0; j < 6; j++){
       vetor[j] = ((int)(60*Math.random()));
     }
     session.setAttribute("vetor", vetor);
+    
+    response.sendRedirect(request.getRequestURI());
+    
     
     }else if(request.getParameter("logout")!=null){
     
@@ -48,10 +52,13 @@
      application.setAttribute("usuariosConect", NomesUsuarios);
      
      session.removeAttribute("nomeusuario");
+     response.sendRedirect(request.getRequestURI());
     }
     
    String nomeusuario = (String) session.getAttribute("nomeusuario");
    int[] Vetor = (int[]) session.getAttribute("vetor");
+   
+    
     %>
 <form>
     <%if(session.getAttribute("nomeusuario")==null){%>

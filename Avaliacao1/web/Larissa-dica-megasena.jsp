@@ -16,11 +16,12 @@
         <br>
           <%if(nomeusuario!=null){%>
           <table border="1" style="width: 580px; height: 100px; margin-left: 28%;">
-              <tr>
+             
          <%for(int k = 0; k < 6; k++){%>
+              <tr>
             <td style="text-align: center"><%= Vetor[k] %></td>
+            </tr>
             <%}%>
-              </tr>
           </table>
            <%}else{%>
             <h2 style="color: crimson">Necessário fazer login para ver o conteudo!</h2>
