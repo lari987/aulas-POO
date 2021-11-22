@@ -1,0 +1,27 @@
+<%-- any content can be specified here e.g.: --%>
+<%@ page pageEncoding="UTF-8" %>
+<h1>LarissaTasksApp</h1>
+<%
+    if(request.getParameter("login")!=null){//apartir do momento que o usuario se loga
+        String userName = request.getParameter("username");
+        String id = request.getParameter("id");
+        session.setAttribute("username", userName);
+        session.setAttribute("id", id);
+        response.sendRedirect(request.getRequestURI());
+        
+    }else if(request.getParameter("logout")!=null){
+        session.removeAttribute("username");
+        response.sendRedirect(request.getRequestURI());
+    }
+%>
+<form>
+    <br>
+    <%if(session.getAttribute("username")==null){%>
+            Nome: <input type="text" name="username"/>
+            Id do Usuario: <input type="text" name="id"/>
+            <input type="submit" name="login" value="LOGIN"/>
+            <%}else{%>
+            Bem Vindo(a), <%= session.getAttribute("username") %>
+             <input type="submit" name="logout" value="LOGOUT"/>
+            <%}%>
+</form>

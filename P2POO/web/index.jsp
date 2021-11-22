@@ -1,12 +1,11 @@
 <%-- 
     Document   : index
-    Created on : 8 de nov. de 2021, 19:03:24
+    Created on : 22 de nov. de 2021, 15:16:05
     Author     : Larry
 --%>
-<%@page import="java.util.Date"%>
+
 <%@page import="java.util.ArrayList"%>
 <%@page import="db.Tasks"%>
-<%@page import="web.DbListener"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <% 
@@ -31,18 +30,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JDBC - To-do list</title>
+        <title>JSP Page</title>
     </head>
     <body>
-        <h1>JDBC - Larissa</h1>
-        <div><%= new Date() %></div>
-        <h2>To-do List</h2>
-        <%if(DbListener.exception!=null){%>
-        <div style="color:red">
-            Erro na criação do banco de dados:
-            <%= DbListener.exception.getMessage() %>
-        </div>
-        <%}%>
+         <%@include file="WEB-INF/jspf/header.jspf" %>
+        <h1>Inicio</h1>
+        <% if(session.getAttribute("username")!=null){%>
         <%if(requestException!=null){%>
         <div style="color:red">
             Erro na leitura ou criação de tarefas:
@@ -55,10 +48,18 @@
             <input type="text" name="taskName"/>
             <input type="submit" name="add" value="Adicionar"/>
         </form>
-        <table>
+        <br>
+        <table border="1">
+            <tr>
+                <th>Nome da Tarefa</th>
+                <th>Nome do Usuario</th>
+                <th>ID do Usuario</th>
+            </tr>
             <%for(String taskName: Tasks.getTasks()){%>
             <tr>
             <td><%= taskName %></td>
+            <td><%= session.getAttribute("username") %></td>
+            <td><%= session.getAttribute("id") %></td>
             <td>
                 <form>
                     <input type="hidden" name="taskName" value="<%= taskName %>"/>
@@ -68,5 +69,8 @@
             </tr>
             <%}%>
         </table>
+        <%}else{%>
+        <h2 style="color: red">Voce não tem permissão para ver o conteúdo!</h2>
+        <%}%>
     </body>
 </html>

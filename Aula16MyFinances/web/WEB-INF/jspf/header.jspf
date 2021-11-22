@@ -1,0 +1,14 @@
+<%-- any content can be specified here e.g.: --%>
+<%@page import="web.DbListener"%>
+<%@ page pageEncoding="UTF-8" %>
+<h1>MyFinance$</h1>
+<hr/>
+<%if(DbListener.exception!=null){%>
+<div style="color: red"><%= DbListener.exception.getMessage() %></div>
+<hr/>
+<%}%>
+
+<form method="post">
+    Login: <input type="text" name="user.login"/>
+    Senha: <input type=""
+</form>
